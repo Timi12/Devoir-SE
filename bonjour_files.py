@@ -4,12 +4,10 @@ Le premier prgramme en Python
 * les listes et la fonction map
 * les threads
 * le logger
-
 @author Dragos STOICA
 @version 0.4
 @date 16.feb.2014
 """
-
 import sys, threading, logging, os
 
 class Bonjour(threading.Thread):
@@ -46,21 +44,29 @@ def main(argv=None):
     else:
         #Argument 1 est le nom de fichier avec un noms per ligne
         mmeThread = []
+        mlleThread = []
         mThread = []
         with open(working_dir + argv[1],'r') as f:
             #Dites bonjour a chaque personne de fichier
             for ligne in f:
-                if ligne[0:2] == "M.":
-                    mThread.append(Bonjour(ligne.strip(' \r\n')))
+                if ligne[0:4] == "Mme.":
+                    mmeThread.append(Bonjour(ligne.strip(' \r\n')))
+                elif ligne[0:2] == "M.":
+                     mThread.append(Bonjour(ligne.strip(' \r\n')))
                 else:
-                    mme_local = Bonjour(ligne.strip(' \r\n'))
-                    mmeThread.append(mme_local)
-                    mme_local.start()
+                    mlle_local = Bonjour(ligne.strip(' \r\n'))
+                    mlleThread.append(mlle_local)
+                    mlle_local.start()
+       
+        for mlle in mlleThread:
+            mlle.join()
         for mme in mmeThread:
+            mme.start()
             mme.join()
         for m in mThread:
             m.start()
             m.join()
+        
     logging.info("Main stop")                
     return 0
 
