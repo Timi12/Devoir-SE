@@ -46,7 +46,8 @@ def main(argv=None):
         mmeThread = []
         mlleThread = []
         mThread = []
-        with open(working_dir + argv[1],'r') as f:
+        
+        with open('Liste_Noms.txt','r') as f:
             #Dites bonjour a chaque personne de fichier
             for ligne in f:
                 if ligne[0:4] == "Mme.":
